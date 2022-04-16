@@ -43,9 +43,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.#>
 # Commmon Cartidge File Format specs
 # https://www.imsglobal.org/cc/index.html
 
-# import .NET 4.5 compression utilities
+# import .NET 4.5 compression utilities & support for file browsing when run from CLI
     Add-Type -Assembly System.IO.Compression;
     Add-Type -Assembly System.IO.Compression.FileSystem;
+    Add-Type -Assembly System.Windows.Forms;
 Clear-Host
 # //TODO change script to params to support pipelining
 # /////         USER-CONFIGURABLE PREFERENCES      \\\\\
@@ -103,7 +104,7 @@ $FileBrowser.FileName
 $PartFileCounter = 1
 $TotalSize = ((Get-Item $FileBrowser.FileName).Length)
 $TotalSizeWritten = 0
-$IMSCCPartFilePath = ($FileBrowser.FileName.Substring(0,$FileBrowser.FileName.Length-6))+' ('+$usrSuffix+$PartFileCounter+').zip'
+$IMSCCPartFilePath = ($FileBrowser.FileName.Substring(0,$FileBrowser.FileName.Length-6))+' ('+$usrSuffix+' '+$PartFileCounter+').zip'
 # Check to see if we're going to overwrite some files!
 # Relies on System.Mgmt.Automation, so try statement for all those MAC users
 # Maybe it'll work?
@@ -225,7 +226,7 @@ $zipStream = New-Object System.IO.Compression.ZipArchive($memoryStream, [System.
                                $sw.Start()}
    }
 
-    $IMSCCPartFilePath = ($FileBrowser.FileName.Substring(0,$FileBrowser.FileName.Length-6))+' ('+$usrSuffix+$PartFileCounter+').imscc'
+    $IMSCCPartFilePath = ($FileBrowser.FileName.Substring(0,$FileBrowser.FileName.Length-6))+' ('+$usrSuffix+' '+$PartFileCounter+').imscc'
     Write-MemoryToArchive ($IMSCCPartFilePath)
     # Finally close the orignal zip file.  This is necessary 
     # because the zip file does not get closed automatically
