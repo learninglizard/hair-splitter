@@ -102,7 +102,6 @@ $result = $FileBrowser.ShowDialog()
 $FileBrowser.FileName
 # Initialize File Counters & Paths
 $PartFileCounter = 1
-$TotalSize = ((Get-Item $FileBrowser.FileName).Length)
 $TotalSizeWritten = 0
 $IMSCCPartFilePath = ($FileBrowser.FileName.Substring(0,$FileBrowser.FileName.Length-6))+' ('+$usrSuffix+' '+$PartFileCounter+').zip'
 # Check to see if we're going to overwrite some files!
@@ -139,6 +138,9 @@ $memoryStream = New-Object System.IO.MemoryStream
 $zipStream = New-Object System.IO.Compression.ZipArchive($memoryStream, [System.IO.Compression.ZipArchiveMode]::Create, $true)
     $zip = [IO.Compression.ZipFile]::OpenRead($FileBrowser.FileName)
 
+# Calculate total compressed size
+$TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
+
     # Generate web_resource .zip files first
     $null = $zip.Entries |
         # For web resources, let's sort by size from smallest to largest
@@ -163,7 +165,6 @@ $zipStream = New-Object System.IO.Compression.ZipArchive($memoryStream, [System.
         $open.Dispose()
         # Update Overall Progress Bar
         $webpercentComplete = [math]::Round(($TotalSizeWritten/1MB)/($TotalSize/1MB)*100)
-        if ($webpercentComplete -ge 100) {$webpercentComplete = 98}
         $OverallActivityText = "Writing Canvas Files folder (.zip) files...   " + $_.FullName.Substring(14) + "  Overall progress " + [math]::Round($TotalSizeWritten/1MB) +" MB out of " + [math]::Round($TotalSize/1MB) + " MBs"
         $null = If ($sw.Elapsed.TotalMilliseconds -ge 1000) {
                                Write-Progress `
