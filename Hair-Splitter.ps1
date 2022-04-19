@@ -215,7 +215,7 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
     # Update our total progress first!
     $TotalSizeWritten = $_.CompressedLength + $TotalSizeWritten
     # Update Overall Progress Bar
-    $percentComplete = [math]::Round($TotalSizeWritten/$TotalSize)*100)
+    $percentComplete = [math]::Round(($TotalSizeWritten/$TotalSize)*100)
     $OverallActivityText = "Writing IMSCC files (*.imscc)...   " + $_.FullName + "  Overall progress " + $TotalSizeWritten/1MB +" MB out of " + $TotalSize/1MB + " MBs"
     $null = If ($sw.Elapsed.TotalMilliseconds -ge 1000) {
                                Write-Progress `
