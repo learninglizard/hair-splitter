@@ -188,10 +188,15 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
         
     }
 
-# Now that we're finished with the web resources, write the last web-resources part file!
-            $null = Write-MemoryToArchive ($IMSCCPartFilePath)
-            # Increment the part file counter
-            $PartFileCounter++
+# Now that we're finished with the web resources, write the last web-resources part file assuming it's not empty!
+            if ($memoryStream.Length -gt 0)
+            {
+                $null = Write-MemoryToArchive ($IMSCCPartFilePath)
+                $PartFileCounter++
+                }
+            # Reset memory Stream in case there's no more web_resources files to write
+            $null = $memoryStream.Seek(0, [System.IO.SeekOrigin]::Begin)
+            $null = $memoryStream.SetLength(0)
             $IMSCCPartFilePath = File-NameGenerator($PartFileCounter)
             # Make a new zipstream from the $memoryStream
             $zipStream = New-Object System.IO.Compression.ZipArchive($memoryStream, [System.IO.Compression.ZipArchiveMode]::Create, $true)
