@@ -145,7 +145,7 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
     $null = $zip.Entries |
         # For web resources, let's sort by size from smallest to largest
         # This helps prevent a massive *imscc file
-        Sort-Object -Property Length |
+        Sort-Object -Property CompressedLength |
         # The file will be everything in the web_resources folder
         Where-Object { $_.FullName -match ".*\web_resources\.*" } |
         ForEach-Object {
@@ -159,12 +159,12 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
         $fileMemoryStream.Position = 0
         $fileMemoryStream.CopyTo($open)
         # Update our total progress first!
-        $TotalSizeWritten = [math]::Round(($_.Length) + $TotalSizeWritten)
+        $TotalSizeWritten = [math]::Round(($_.CompressedLength) + $TotalSizeWritten)
         $fileMemoryStream.Flush()
         $open.Flush()
         $open.Dispose()
         # Update Overall Progress Bar
-        $webpercentComplete = [math]::Round(($TotalSizeWritten/1MB)/($TotalSize/1MB)*100)
+        $webpercentComplete = [math]::Round($TotalSizeWritten/$TotalSize*100)
         $OverallActivityText = "Writing Canvas Files folder (.zip) files...   " + $_.FullName.Substring(14) + "  Overall progress " + [math]::Round($TotalSizeWritten/1MB) +" MB out of " + [math]::Round($TotalSize/1MB) + " MBs"
         $null = If ($sw.Elapsed.TotalMilliseconds -ge 1000) {
                                Write-Progress `
