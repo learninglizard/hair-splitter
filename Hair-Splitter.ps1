@@ -62,7 +62,7 @@ Clear-Host
 [System.IO.Compression.CompressionLevel]$Compression = "Fastest"
 
 # Writes a part file to disk
-$null= function Write-MemoryToArchive ($savePath)
+$null = function Write-MemoryToArchive ($savePath)
         {
         # Finally close the orignal zip file.  This is necessary 
         # because the zip file does not get closed automatically
@@ -82,7 +82,7 @@ $null= function Write-MemoryToArchive ($savePath)
         }
 
 # Generates part file names
-$null=function File-NameGenerator($counter)
+$null = function File-NameGenerator($counter)
 {
         return ($FileBrowser.FileName.Substring(0,$FileBrowser.FileName.Length-6))+' ('+$usrSuffix+' '+$counter+').zip'
 }
@@ -164,7 +164,7 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
         $open.Flush()
         $open.Dispose()
         # Update Overall Progress Bar
-        $webpercentComplete = [math]::Round($TotalSizeWritten/$TotalSize*100)
+        $webpercentComplete = [math]::Round(($TotalSizeWritten/$TotalSize)*100)
         $OverallActivityText = "Writing Canvas Files folder (.zip) files...   " + $_.FullName.Substring(14) + "  Overall progress " + [math]::Round($TotalSizeWritten/1MB) +" MB out of " + [math]::Round($TotalSize/1MB) + " MBs"
         $null = If ($sw.Elapsed.TotalMilliseconds -ge 1000) {
                                Write-Progress `
@@ -178,7 +178,7 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
         if( [math]::Round(($memoryStream.Length)) -gt $usrMaxImportFileSize)
         {
             # Save our current progress to disk as a part file
-            Write-MemoryToArchive ($IMSCCPartFilePath)
+            $null = Write-MemoryToArchive ($IMSCCPartFilePath)
             # Increment the part file counter
             $PartFileCounter++
             $IMSCCPartFilePath = File-NameGenerator($PartFileCounter)
@@ -189,7 +189,7 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
     }
 
 # Now that we're finished with the web resources, write the last web-resources part file!
-            Write-MemoryToArchive ($IMSCCPartFilePath)
+            $null = Write-MemoryToArchive ($IMSCCPartFilePath)
             # Increment the part file counter
             $PartFileCounter++
             $IMSCCPartFilePath = File-NameGenerator($PartFileCounter)
@@ -215,7 +215,7 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
     # Update our total progress first!
     $TotalSizeWritten = $_.CompressedLength + $TotalSizeWritten
     # Update Overall Progress Bar
-    $percentComplete = [math]::Round($TotalSizeWritten/$TotalSize)*100)
+    $percentComplete = [math]::Round(($TotalSizeWritten/$TotalSize)*100)
     $OverallActivityText = "Writing IMSCC files (*.imscc)...   " + $_.FullName + "  Overall progress " + $TotalSizeWritten/1MB +" MB out of " + $TotalSize/1MB + " MBs"
     $null = If ($sw.Elapsed.TotalMilliseconds -ge 1000) {
                                Write-Progress `
@@ -227,7 +227,7 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
    }
 
     $IMSCCPartFilePath = ($FileBrowser.FileName.Substring(0,$FileBrowser.FileName.Length-6))+' ('+$usrSuffix+' '+$PartFileCounter+').imscc'
-    Write-MemoryToArchive ($IMSCCPartFilePath)
+    $null = Write-MemoryToArchive ($IMSCCPartFilePath)
     # Finally close the orignal zip file.  This is necessary 
     # because the zip file does not get closed automatically
     $zip.Dispose()
@@ -235,8 +235,6 @@ $TotalSize = ($zip.Entries | Measure  CompressedLength -Sum).Sum
     $zipStream.Dispose()
     $memoryStream.Dispose()
     $scriptRuntime.Stop()
-    $percentComplete=1
-    $webpercentComplete=1
     Write-Output ("The script has completed!", "" ,
     ("It generated " + $PartFileCounter +" part files in " + $scriptRuntime.Elapsed.Minutes +
     " minutes and " + $scriptRuntime.Elapsed.Seconds + " seconds.",
