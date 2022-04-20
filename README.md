@@ -13,6 +13,8 @@ IMSCC Common Cartridge File Splitter for Canvas by Instructure
        **IMPORTANT!**  Upload all the .zip part files files under the **`-courses-`** directory in Canvas
 8.  Check your course, everything should be gtg
 
+You may need to run in PowerShell 7 to support some Common Cartridge files depending on how the archive exported.
+You can tell because the script will error and you'll receive a ton of null errors in the console
 
 #///////////////////////////////#<br>
 #### NOTES FROM THE AUTHOR:<br><br>
