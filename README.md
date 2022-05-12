@@ -17,12 +17,13 @@ IMSCC Common Cartridge File Splitter for Canvas by Instructure
 You may need to run in PowerShell 7 to support some Common Cartridge files depending on how the archive exported.<br>
 You can tell because the script will error and you'll receive a ton of null errors in the console.<br>
 1.  Install Powershell 7 from the Microsoft App Store: https://www.microsoft.com/store/productId/9MZ1SNWT0N5D<br>
-2.  Save the PowerShell script by going to prject page https://github.com/learninglizard/hair-splitter<br>
-3.  Right-Click on the .ps1 file and click **Save Link As** accept any browser warnings.<br>
+2.  Save the PowerShell script by going to the project page: https://github.com/learninglizard/hair-splitter<br>
+3.  Right-Click on the .ps1 file link and click **Save Link As** accept any browser warnings.<br>
 4.  **SAVE TO YOUR DOWNLOADS FOLDER** (commands assume this is where the script is saved)<br>
 5.  Launch PowerShell 7 by searching the StartMenu for "PowerShell"<br>
 It should be listed as **PowerShell** (not Windows PowerShell), say **App** underneath and be a **black** icon instead of blue.<br>
-6.  Run `powershell.exe -ExecutionPolicy UnRestricted -File $env:userprofile\Downloads\Hair-Splitter.ps1` in the console to run the script with default settings.<br>
+6.  Run `powershell.exe -ExecutionPolicy UnRestricted -File $env:userprofile\Downloads\Hair-Splitter.ps1`<br>
+    in the console to run the script with default settings.<br>
 
 Command-line options:
 The script supports PowerShell parameters or switches.<br>
@@ -31,14 +32,13 @@ For example, you can run<br>
 to generate 1GB part files which will be labeled `originalfilename (splitfiles 1)` etc.
 
 #### APPLE INSTRUCTIONS
-(Untested)
-Install PowerShell via your preferred method:  https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2
+(Untested)<br>
+Install PowerShell via your preferred method from [Microsoft's guide](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2)<br>
 Run using same commands as Windows.  Paths may need to be changed due to changes in MacOS directory structures.
 
-
 #///////////////////////////////#<br>
-#### NOTES FROM THE AUTHOR:<br><br>
-The output will be one *.imscc file and zero or more *.zip files<br><br>
+#### NOTES FROM THE AUTHOR:<br>
+The output will be one *.imscc file and zero or more *.zip files<br>
 The output files will be located in the same directory as your original imscc file.<br><br>
 HOW IT WORKS<br>
 The 'algorithm' works the same way as one might load groceries onto a conveyor belt at the supermarket.<br>
