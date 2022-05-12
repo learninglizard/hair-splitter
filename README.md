@@ -1,20 +1,39 @@
 # hair-splitter
 IMSCC Common Cartridge File Splitter for Canvas by Instructure
 
-#### INSTRUCTIONS ON HOW TO RUN
+#### WINDOWS INSTRUCTIONS
 
+(Easiest method, but may have issues with some IMSCC files due to PowerShell bugs)
 1.  Search for `Windows PowerShell ISE` in the start menu
 2.  If there is no untitled blank file open press **Ctrl** + **R** to make one appear
 3.  Copy and paste the contents into the ISE
        (The white background editor part... if it's missing, press **Ctrl** + **2**)
-4.  Change the `$usrMaxImportFileSize` to the size you want your *.imscc files split by
+4.  If running in ISE change the `$MaxPartFileSize` to the size you want your *.imscc files split by.
 5.  Then smash the green play button! (Or press `F5`)
 6.  You should be able to upload the part files in order with the *.imscc file last<br>
        **IMPORTANT!**  Upload all the .zip part files files under the **`-courses-`** directory in Canvas
-8.  Check your course, everything should be gtg
+7.  Check your course, everything should be gtg
 
 You may need to run in PowerShell 7 to support some Common Cartridge files depending on how the archive exported.
-You can tell because the script will error and you'll receive a ton of null errors in the console
+You can tell because the script will error and you'll receive a ton of null errors in the console.
+Install Powershell 7 from the Microsoft App Store: https://www.microsoft.com/store/productId/9MZ1SNWT0N5D
+Save the PowerShell script by going to prject page https://github.com/learninglizard/hair-splitter
+Right-Click on the .ps1 file and click **Save Link As** accept any browser warnings.
+**SAVE TO YOUR DOWNLOADS FOLDER** (commands assume this is where the script is saved)
+Launch PowerShell 7 by searching the StartMenu for "PowerShell"
+It should be listed as **PowerShell** (not Windows PowerShell), say **App** underneath and be a **black** icon instead of blue.
+Run `powershell.exe -ExecutionPolicy UnRestricted -File $env:userprofile\Downloads\Hair-Splitter.ps1` in the console to run the script with default settings.
+
+Command-line options:
+The script supports PowerShell parameters or switches.
+For example, you can run `powershell.exe -ExecutionPolicy UnRestricted -File $env:userprofile\Downloads\Hair-Splitter.ps1 1GB splitfiles`
+to generate 1GB part files which will be labeled `originalfilename (splitfiles 1)` etc.
+
+#### APPLE INSTRUCTIONS
+(Untested)
+Install PowerShell via your preferred method:  https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2
+Run using same commands as Windows.  Paths may need to be changed due to changes in MacOS directory structures.
+
 
 #///////////////////////////////#<br>
 #### NOTES FROM THE AUTHOR:<br><br>
